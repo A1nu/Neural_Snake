@@ -27,7 +27,7 @@ public class Snake : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
-		Debug.Log("1111", other);
+		Debug.Log("1111");
 		if (hit != null)
 		{
 			hit(other.transform.tag);
