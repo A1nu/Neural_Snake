@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+
+
 public class Snake : MonoBehaviour {
 
 	private Snake next;
@@ -25,6 +27,7 @@ public class Snake : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
+		Debug.Log("1111", other);
 		if (hit != null)
 		{
 			hit(other.transform.tag);

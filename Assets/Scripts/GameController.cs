@@ -33,7 +33,7 @@ public class GameController : MonoBehaviour
 	
 	// Use this for initialization
 	void Start () {
-		InvokeRepeating("TimerInvoke", 0, .5f );
+		InvokeRepeating("TimerInvoke", 0, .3f );
 		FoodFunction();
 	}
 
