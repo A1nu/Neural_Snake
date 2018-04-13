@@ -23,7 +23,6 @@ public class GameController : MonoBehaviour
 	public Transform BorderBottom;
 	public Transform BorderLeft;
 	public Transform BorderRight;
-	public bool isStepFinished;
 
 	void OnEnable()
 	{
@@ -83,36 +82,28 @@ public class GameController : MonoBehaviour
 		temp = (GameObject) Instantiate(snakePrefab, nextPos, transform.rotation);
 		head.SetNext(temp.GetComponent<Snake>());
 		head = temp.GetComponent<Snake>();
-		isStepFinished = true;
 	}
 
 	void ComCHangeD()
 	{
-		if (isStepFinished)
+		if (NESW != 2 && Input.GetKeyDown(KeyCode.UpArrow ))
 		{
-			if (NESW != 2 && Input.GetKeyDown(KeyCode.UpArrow ))
-			{
-				NESW = 0;
-				isStepFinished = false;
+			NESW = 0;
 
-			}
-			if (NESW != 3 && Input.GetKeyDown(KeyCode.RightArrow))
-			{
-				NESW = 1;
-				isStepFinished = false;
+		}
+		if (NESW != 3 && Input.GetKeyDown(KeyCode.RightArrow))
+		{
+			NESW = 1;
 
-			}
-			if (NESW != 0 && Input.GetKeyDown(KeyCode.DownArrow ))
-			{
-				NESW = 2;
-				isStepFinished = false;
+		}
+		if (NESW != 0 && Input.GetKeyDown(KeyCode.DownArrow ))
+		{
+			NESW = 2;
 
-			}
-			if (NESW != 1 && Input.GetKeyDown(KeyCode.LeftArrow ))
-			{
-				NESW = 3;
-				isStepFinished = false;
-			}
+		}
+		if (NESW != 1 && Input.GetKeyDown(KeyCode.LeftArrow ))
+		{
+			NESW = 3;
 		}
 	}
 
@@ -126,17 +117,15 @@ public class GameController : MonoBehaviour
 	void FoodFunction()
 	{
 		int xPos = GenerateCoords((int)BorderLeft.position.x, (int)BorderRight.position.x);
-		int yPos = GenerateCoords((int)BorderBottom.position.y, (int)BorderTop.position.x);
-
+		int yPos = GenerateCoords((int)BorderBottom.position.y, (int)BorderTop.position.y);
 		while (xPos == (int)BorderLeft.position.x || xPos == (int)BorderRight.position.x
-               		    || yPos == (int)BorderBottom.position.y || yPos == (int)BorderTop.position.x)
+               		    || yPos == (int)BorderBottom.position.y || yPos == (int)BorderTop.position.y)
 		{
 			 xPos = GenerateCoords((int)BorderLeft.position.x, (int)BorderRight.position.x);
-			 yPos = GenerateCoords((int)BorderBottom.position.y, (int)BorderTop.position.x);
+			 yPos = GenerateCoords((int)BorderBottom.position.y, (int)BorderTop.position.y);
 		}
-
+		
 		currentFood = (GameObject) Instantiate(foodPrefab, new Vector2(xPos, yPos), transform.rotation);
-
 		StartCoroutine(CheckRender(currentFood));
 	}
 
