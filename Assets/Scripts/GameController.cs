@@ -10,8 +10,6 @@ public class GameController : MonoBehaviour
 {
 	public int maxSize;
 	public int CurrentSize;
-	public int xBound;
-	public int yBound;
 	public int score;
 	public GameObject foodPrefab;
 	public GameObject currentFood;
@@ -25,6 +23,7 @@ public class GameController : MonoBehaviour
 	public Transform BorderBottom;
 	public Transform BorderLeft;
 	public Transform BorderRight;
+	public bool isStepFinished;
 
 	void OnEnable()
 	{
@@ -84,25 +83,36 @@ public class GameController : MonoBehaviour
 		temp = (GameObject) Instantiate(snakePrefab, nextPos, transform.rotation);
 		head.SetNext(temp.GetComponent<Snake>());
 		head = temp.GetComponent<Snake>();
+		isStepFinished = true;
 	}
 
 	void ComCHangeD()
 	{
-		if (NESW != 2 && Input.GetKeyDown(KeyCode.UpArrow ))
+		if (isStepFinished)
 		{
-			NESW = 0;
-		}
-		if (NESW != 3 && Input.GetKeyDown(KeyCode.RightArrow))
-		{
-			NESW = 1; 
-		}
-		if (NESW != 0 && Input.GetKeyDown(KeyCode.DownArrow ))
-		{
-			NESW = 2;
-		}
-		if (NESW != 1 && Input.GetKeyDown(KeyCode.LeftArrow ))
-		{
-			NESW = 3 ;
+			if (NESW != 2 && Input.GetKeyDown(KeyCode.UpArrow ))
+			{
+				NESW = 0;
+				isStepFinished = false;
+
+			}
+			if (NESW != 3 && Input.GetKeyDown(KeyCode.RightArrow))
+			{
+				NESW = 1;
+				isStepFinished = false;
+
+			}
+			if (NESW != 0 && Input.GetKeyDown(KeyCode.DownArrow ))
+			{
+				NESW = 2;
+				isStepFinished = false;
+
+			}
+			if (NESW != 1 && Input.GetKeyDown(KeyCode.LeftArrow ))
+			{
+				NESW = 3;
+				isStepFinished = false;
+			}
 		}
 	}
 
@@ -115,8 +125,8 @@ public class GameController : MonoBehaviour
 
 	void FoodFunction()
 	{
-		int xPos = (int)Random.Range(BorderLeft.position.x, BorderRight.position.x);
-		int yPos = (int)Random.Range(BorderBottom.position.y, BorderTop.position.y);
+		int xPos = (int)Random.Range(BorderLeft.position.x + 1, BorderRight.position.x - 1);
+		int yPos = (int)Random.Range(BorderBottom.position.y + 1, BorderTop.position.y - 1);
 
 		currentFood = (GameObject) Instantiate(foodPrefab, new Vector2(xPos, yPos), transform.rotation);
 
