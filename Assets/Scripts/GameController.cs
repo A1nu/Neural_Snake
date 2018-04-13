@@ -125,12 +125,26 @@ public class GameController : MonoBehaviour
 
 	void FoodFunction()
 	{
-		int xPos = (int)Random.Range(BorderLeft.position.x + 1, BorderRight.position.x - 1);
-		int yPos = (int)Random.Range(BorderBottom.position.y + 1, BorderTop.position.y - 1);
+		int xPos = GenerateCoords((int)BorderLeft.position.x, (int)BorderRight.position.x);
+		int yPos = GenerateCoords((int)BorderBottom.position.y, (int)BorderTop.position.x);
+
+		while (xPos == (int)BorderLeft.position.x || xPos == (int)BorderRight.position.x
+               		    || yPos == (int)BorderBottom.position.y || yPos == (int)BorderTop.position.x)
+		{
+			 xPos = GenerateCoords((int)BorderLeft.position.x, (int)BorderRight.position.x);
+			 yPos = GenerateCoords((int)BorderBottom.position.y, (int)BorderTop.position.x);
+		}
 
 		currentFood = (GameObject) Instantiate(foodPrefab, new Vector2(xPos, yPos), transform.rotation);
 
 		StartCoroutine(CheckRender(currentFood));
+	}
+
+	private int GenerateCoords(int beginning, int ending)
+	{
+		int coord = Random.Range(beginning, ending);
+
+		return coord;
 	}
 
 	IEnumerator CheckRender(GameObject IN)
